@@ -21,7 +21,88 @@ function draw () {
   function ready( error, us, data ) {
 
     incomes = transformFIPSData(data);
+    // console.log(incomes);
     drawMap(us, incomes);
+    drawLineGraph(incomes);
+  }
+
+  function dataByState(data, state) {
+    var result = [];
+
+    for (var i = 0; i < data.length; i++) {
+      if (data[i].GeoName === state) {
+        console.log(data[i].Years);
+
+        Object.keys(data[i].Years).forEach(function(year) {
+
+          // TODO: see if we can plot points without reconfiguring data into this format
+          result.push({
+            year : year,
+            value : data[i].Years[year]
+          });
+        });
+      }
+    }
+
+    return result;
+  }
+
+  // data is array of objects with Years key of objects
+  function drawLineGraph(data) {
+    //baked in state
+    var state = "Hawaii";
+
+    var stateData = dataByState(data, state);
+
+    console.log(stateData);
+
+    var vis = d3.select('#line-graph');
+    var width = 1000;
+    var height = 500;
+    var margins = {
+        top: 20,
+        right: 20,
+        bottom: 20,
+        left: 50
+      };
+
+    //TODO: set domains for xScale and yScale dynamically
+    var xScale = d3.scale.linear().range([margins.left, width - margins.right]).domain([1929, 2013]);
+    var yScale = d3.scale.linear().range([height - margins.top, margins.bottom]).domain([0,50000]);
+
+    var formatXAxis = d3.format('.0f');
+
+    var xAxis = d3.svg.axis()
+        .scale(xScale)
+        .tickFormat(formatXAxis);
+    var yAxis = d3.svg.axis()
+        .scale(yScale)
+        .orient("left");
+
+    vis.append("svg:g")
+       .attr("class", "x axis")
+       .attr("transform", "translate(0," + (height - margins.bottom) + ")")
+       .call(xAxis);
+
+    vis.append("svg:g")
+       .attr("class", "y axis")
+       .attr("transform", "translate(" + (margins.left) + ",0)")
+       .call(yAxis);
+
+    var lineGen = d3.svg.line()
+      .x(function(d) {
+        return xScale(d.year);
+      })
+      .y(function(d) {
+        return yScale(d.value);
+      })
+      .interpolate("linear");
+
+    vis.append("svg:path")
+       .attr("d", lineGen(stateData))
+       .attr("stroke", "orange")
+       .attr("stroke-width", 2)
+       .attr("fill", "none");
   }
   
   function setup (width, height) {
