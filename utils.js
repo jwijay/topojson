@@ -50,11 +50,10 @@ function draw () {
   // data is array of objects with Years key of objects
   function drawLineGraph(data) {
     //baked in state
-    var state = "Hawaii";
+    var HIStateData = dataByState(data, "Hawaii");
+    var USAvgData = dataByState(data, "United States");
 
-    var stateData = dataByState(data, state);
-
-    console.log(stateData);
+    console.log(USAvgData);
 
     var vis = d3.select('#line-graph');
     var width = 1000;
@@ -99,8 +98,14 @@ function draw () {
       .interpolate("linear");
 
     vis.append("svg:path")
-       .attr("d", lineGen(stateData))
-       .attr("stroke", "orange")
+       .attr("d", lineGen(HIStateData))
+       .attr("stroke", "orange") //TODO: change color dynamically
+       .attr("stroke-width", 2)
+       .attr("fill", "none");
+
+    vis.append("svg:path")
+       .attr("d", lineGen(USAvgData))
+       .attr("stroke", "gray")
        .attr("stroke-width", 2)
        .attr("fill", "none");
   }
