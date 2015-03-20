@@ -56,13 +56,13 @@ function draw () {
     console.log(USAvgData);
 
     var vis = d3.select('#line-graph');
-    var width = 1000;
-    var height = 500;
+    var width = 600;
+    var height = 350;
     var margins = {
         top: 20,
         right: 20,
         bottom: 20,
-        left: 50
+        left: 60
       };
 
     //TODO: set domains for xScale and yScale dynamically
@@ -88,6 +88,12 @@ function draw () {
        .attr("transform", "translate(" + (margins.left) + ",0)")
        .call(yAxis);
 
+    vis.append("text")
+      .attr("x", width/2)
+      .attr("y", height + margins.bottom)
+      .style("text-anchor", "middle")
+      .text("Date");
+
     var lineGen = d3.svg.line()
       .x(function(d) {
         return xScale(d.year);
@@ -98,16 +104,17 @@ function draw () {
       .interpolate("linear");
 
     vis.append("svg:path")
-       .attr("d", lineGen(HIStateData))
-       .attr("stroke", "orange") //TODO: change color dynamically
-       .attr("stroke-width", 2)
+       .attr("d", lineGen(USAvgData))
+       .attr("stroke", "#AAA797")
+       .attr("stroke-width", 3)
        .attr("fill", "none");
 
     vis.append("svg:path")
-       .attr("d", lineGen(USAvgData))
-       .attr("stroke", "gray")
-       .attr("stroke-width", 2)
+       .attr("d", lineGen(HIStateData))
+       .attr("stroke", "orange") //TODO: change color dynamically
+       .attr("stroke-width", 3)
        .attr("fill", "none");
+
   }
   
   function setup (width, height) {
@@ -150,7 +157,7 @@ function draw () {
       .enter().append("path")
       .attr("d", path)
       .style('stroke', '#FFF')
-      .style('stroke-width', 1)
+      .style('stroke-width', 3)
       .style('fill', function (d) {
         return color(incomesByState[d.properties.name]);
       });

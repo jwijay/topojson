@@ -3,10 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <title>TopoJSON Test</title>
+  <link href='http://fonts.googleapis.com/css?family=Bitter:400italic|Montserrat:400,700' rel='stylesheet' type='text/css'>
+  <style>
+  .axis path {
+      fill: none;
+      stroke: #AAA797;
+      stroke-width: 3;
+      shape-rendering: crispEdges;
+  }
+
+  .axis text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    fill: #AAA797;
+  }
+
+  #line-graph text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    fill: #AAA797;
+  }
+  </style>
 </head>
 <body>
   <div id="map"></div>
-  <svg id="line-graph" width="1000" height="500"></svg>
+  <svg id="line-graph" width="600" height="370"></svg>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.5.0/lodash.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
