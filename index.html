@@ -18,16 +18,26 @@
     fill: #AAA797;
   }
 
+  #line-graph {
+    padding-left: 20px;
+  }
+
   #line-graph text {
     font-family: 'Montserrat', sans-serif;
     font-size: 13px;
     fill: #AAA797;
   }
+
   </style>
 </head>
 <body>
   <div id="map"></div>
-  <svg id="line-graph" width="600" height="370"></svg>
+  <div id="brush-container">
+    <svg id="brush" width="600" height="200"></svg>
+  </div>
+  <div id="line-container">
+    <svg id="line-graph" width="600" height="370"></svg>
+  </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.5.0/lodash.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
